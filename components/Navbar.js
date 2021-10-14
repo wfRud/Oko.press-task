@@ -1,23 +1,55 @@
+import { useState } from "react";
+
 import Image from "next/image";
-import Search from "../public/iCons/search.svg";
+import SearchIcon from "../public/iCons/search.svg";
+import NotificationIcon from "../public/iCons/notification.svg";
+import AccountIcon from "../public/iCons/account-circle.svg";
 import styled from "styled-components";
 
-const Navbar = () => (
-  <Nav>
-    <Container>
-      <Logo src={"/logo.svg"} width={32} height={32} />
-      <Menu>
-        <MenuItem>Wydarzenia</MenuItem>
-        <MenuItem>Kontakt</MenuItem>
-        <MenuItem>Wesprzyj Nas</MenuItem>
-      </Menu>
-      <ActionButtons>
-        <Search />
-        <Button>Zaloguj się </Button>
-      </ActionButtons>
-    </Container>
-  </Nav>
-);
+const Navbar = () => {
+  const [isLogged, setIsLogged] = useState(false);
+  const [accountMenu, setAccountMenu] = useState(true);
+
+  const handleLoginButton = () => setIsLogged(true);
+  const handleLogoutButton = () => {
+    setIsLogged(false);
+    setAccountMenu(false);
+  };
+  const handleAccountButton = () => setAccountMenu(!accountMenu);
+
+  return (
+    <Nav>
+      <Container>
+        <Logo src={"/logo.svg"} width={32} height={32} />
+        <Menu>
+          <MenuItem>Wydarzenia</MenuItem>
+          <MenuItem>Kontakt</MenuItem>
+          <MenuItem>Wesprzyj Nas</MenuItem>
+        </Menu>
+
+        {!isLogged && (
+          <ActionButtons>
+            <SearchIcon />
+            <Button onClick={handleLoginButton}>Zaloguj się </Button>
+          </ActionButtons>
+        )}
+
+        {isLogged && (
+          <ActionButtons>
+            <SearchIcon />
+            <NotificationIcon />
+            <AccountIcon onClick={handleAccountButton} />
+            {accountMenu && (
+              <AccountMenu>
+                <Button onClick={handleLogoutButton}>Wyloguj się </Button>
+              </AccountMenu>
+            )}
+          </ActionButtons>
+        )}
+      </Container>
+    </Nav>
+  );
+};
 
 const Nav = styled.nav`
   width: 100%;
@@ -84,6 +116,7 @@ const MenuItem = styled.li`
 const ActionButtons = styled.div`
   flex: 2 1 auto;
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: space-between;
   grid-column: 4/5;
@@ -112,6 +145,42 @@ const Button = styled.button`
     cursor: pointer;
     transform: scale(1.03);
     background-color: ${(props) => props.theme.dark_red};
+  }
+`;
+
+const AccountMenu = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: -80px;
+  right: 0;
+  width: 160px;
+  height: 56px;
+  background-color: ${(props) => props.theme.dark_white};
+  border: 1px solid ${(props) => props.theme.dark};
+  border-radius: 3px;
+  z-index: 0;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    right: 16px;
+    width: 0;
+    height: 0;
+    border: 10px solid;
+    border-color: transparent #000 #000 transparent;
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    top: -17px;
+    right: 17px;
+    width: 0;
+    height: 0;
+    border: 9px solid;
+    border-color: transparent #fff #fff transparent;
   }
 `;
 
