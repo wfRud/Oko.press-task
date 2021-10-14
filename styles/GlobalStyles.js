@@ -13,6 +13,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
+    /* position: relative; */
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
@@ -44,10 +45,16 @@ const theme = {
   // Fonts Weight
   bold: 700,
   medium: 500,
-  ligh: 300,
+  light: 300,
 
   // Colors:
+  white: "#fff",
+  light_grey: "#f1f1f1",
+  grey: "#c7c7c7",
+  heavy_grey: "#8a8a8a",
+  dark: "#000",
   red: "#9E1C1C",
+  dark_red: "#761616",
 };
 
 export { GlobalStyles, theme };
