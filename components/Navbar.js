@@ -61,13 +61,13 @@ const Container = styled.div`
   grid-template-columns: 32px minmax(256px, 336px) 1fr minmax(160px, 188px);
   align-items: center;
   align-content: center;
-  max-width: 1280px;
+  max-width: ${(props) => props.theme.container_size};
   width: 100%;
   height: 100%;
   margin: 0 auto;
 
   @media (max-width: 1280px) {
-    padding: 16px;
+    padding: 0 16px;
   }
 `;
 
@@ -157,7 +157,7 @@ const AccountMenu = styled.div`
   right: 0;
   width: 160px;
   height: 56px;
-  background-color: ${(props) => props.theme.dark_white};
+  background-color: ${(props) => props.theme.white};
   border: 1px solid ${(props) => props.theme.dark};
   border-radius: 3px;
   z-index: 0;
