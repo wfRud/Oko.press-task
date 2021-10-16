@@ -20,7 +20,9 @@ const Navbar = () => {
   return (
     <Nav>
       <Container>
-        <Logo src={"/logo.svg"} width={32} height={32} />
+        <Logo href="/">
+          <Image src={"/logo.svg"} width={32} height={32} />
+        </Logo>
         <Menu>
           <MenuItem>Wydarzenia</MenuItem>
           <MenuItem>Kontakt</MenuItem>
@@ -71,8 +73,8 @@ const Container = styled.div`
   }
 `;
 
-const Logo = styled(Image)`
-  flex: 0 0 auto;
+const Logo = styled.a`
+  grid-column: 1/2;
 `;
 
 const Menu = styled.ul`
@@ -91,7 +93,6 @@ const MenuItem = styled.li`
   position: relative;
   line-height: 20px;
   overflow: hidden;
-  //! font-weight ??
 
   &:before {
     content: "";
