@@ -1,13 +1,19 @@
-import styled from "styled-components";
+import { useState } from "react";
+import ClientOnly from "./ClientOnly";
+import SearchResults from "./SearchResults";
+import styled, { css } from "styled-components";
 
 const Dashboard = ({ data }) => {
+  const [search, setSearch] = useState("");
+
   const {
     login,
     followers: { nodes: followers },
     following: { nodes: following },
     starredRepositories: { nodes: stars },
   } = data;
-  console.log("stars", stars);
+
+  const handleSearchInput = (e) => setSearch(e.target.value);
   return (
     <Container>
       <UserBar>
@@ -25,10 +31,12 @@ const Dashboard = ({ data }) => {
 
       <Search>
         Szukaj
-        <input type="text" />
+        <input type="text" onInput={handleSearchInput} />
       </Search>
 
-      <Results></Results>
+      <SearchResultsWrapper search={search}>
+        <SearchResults search={search} />
+      </SearchResultsWrapper>
     </Container>
   );
 };
@@ -38,9 +46,11 @@ export default Dashboard;
 const Container = styled.div`
   width: 100%;
   max-width: ${(props) => props.theme.container_size};
-  height: auto;
-  min-height: calc(100vh - (72px + 2 * 16px));
+  height: calc(100vh - (72px + 2 * 16px));
   margin: 16px auto;
+  @media (max-width: 1280px) {
+    padding: 0 16px;
+  }
 `;
 
 const UserBar = styled.div`
@@ -73,11 +83,27 @@ const Stats = styled.p`
 `;
 
 const Search = styled.div`
-  width: 300px;
-  margin-left: auto;
   text-align: right;
+  margin-bottom: 16px;
 `;
 
-const Results = styled.div`
-  margin-top: 16px;
+const SearchResultsWrapper = styled(ClientOnly)`
+  ${(props) =>
+    props.search === ""
+      ? css`
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        `
+      : css`
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(auto, 400px));
+          grid-template-rows: repeat(auto-fill, minmax(auto, 216px));
+          gap: 40px;
+          justify-content: space-evenly;
+          overflow-y: scroll;
+        `}
+
+  width: 100%;
+  height: calc(100% - (82px + (2 * 16px)));
 `;
