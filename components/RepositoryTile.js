@@ -27,7 +27,7 @@ const RepositoryTile = ({ result }) => {
         </Heading>
         <Avatar>
           <Image
-            src={avatarUrl ? avatarUrl : `https://unsplash.it/100/100`}
+            src={avatarUrl ? avatarUrl : "/octocat.svg"}
             width={80}
             height={80}
             layout="intrinsic"
@@ -63,7 +63,7 @@ const RepositoryTile = ({ result }) => {
 const Tile = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 392px;
   height: 216px;
   padding: 16px;
   font-family: ${(props) => props.theme.alternateFont};

@@ -12,7 +12,6 @@ const Dashboard = ({ data }) => {
     following: { totalCount: following },
     starredRepositories: { totalCount: stars },
   } = data;
-  console.log(data);
   const handleSearchInput = (e) => setSearch(e.target.value);
   return (
     <Container>
@@ -97,7 +96,7 @@ const SearchResultsWrapper = styled(ClientOnly)`
         `
       : css`
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(auto, 400px));
+          grid-template-columns: repeat(auto-fill, minmax(auto, 392px));
           grid-template-rows: repeat(auto-fill, minmax(auto, 216px));
           gap: 40px;
           justify-content: space-evenly;
