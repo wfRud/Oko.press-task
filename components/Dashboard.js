@@ -8,24 +8,24 @@ const Dashboard = ({ data }) => {
 
   const {
     login,
-    followers: { nodes: followers },
-    following: { nodes: following },
-    starredRepositories: { nodes: stars },
+    followers: { totalCount: followers },
+    following: { totalCount: following },
+    starredRepositories: { totalCount: stars },
   } = data;
-
+  console.log(data);
   const handleSearchInput = (e) => setSearch(e.target.value);
   return (
     <Container>
       <UserBar>
         <Heading>Witaj {login}</Heading>
         <Stats>
-          Follower: <span>{followers.length}</span>
+          Follower: <span>{followers}</span>
         </Stats>
         <Stats>
-          Following: <span>{following.length}</span>
+          Following: <span>{following}</span>
         </Stats>
         <Stats>
-          Stars: <span>{stars.length}</span>
+          Stars: <span>{stars}</span>
         </Stats>
       </UserBar>
 
