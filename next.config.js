@@ -8,4 +8,15 @@ module.exports = {
 
     return config;
   },
+  env: {
+    GITHUB_ACCESS_TOKEN: "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",
+  },
+  images: {
+    domains: [
+      "docs.github.com",
+      "github.com",
+      "avatars.githubusercontent.com",
+      "unsplash.it",
+    ],
+  },
 };
