@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
 const token = process.env.GITHUB_ACCESS_TOKEN;
-console.log(token);
+
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
