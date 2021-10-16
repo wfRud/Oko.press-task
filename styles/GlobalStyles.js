@@ -20,7 +20,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
 
-  h2, p  {
+  h2, h3, p  {
     margin: 0
   }
   h2, p, a {
@@ -35,7 +35,8 @@ const GlobalStyles = createGlobalStyle`
 
 const theme = {
   //Fonts
-  main: "Inter",
+  main: "Inter, sans-serif",
+  alternateFont: "Roboto, sans-serif",
 
   // Fonts Size
   size_L: "24px",
@@ -55,6 +56,9 @@ const theme = {
   dark: "#000",
   red: "#9E1C1C",
   dark_red: "#761616",
+
+  // Ranges
+  container_size: "1280px",
 };
 
 export { GlobalStyles, theme };
