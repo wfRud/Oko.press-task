@@ -1,10 +1,11 @@
 import { useState } from "react";
 import ClientOnly from "./ClientOnly";
-import SearchResults from "./SearchResults";
+import Repositories from "./Repositories";
 import styled, { css } from "styled-components";
 
 const Dashboard = ({ data }) => {
   const [search, setSearch] = useState("");
+  const [checkedAmountResult, setCheckedAmountResult] = useState(10);
 
   const {
     login,
@@ -12,7 +13,10 @@ const Dashboard = ({ data }) => {
     following: { totalCount: following },
     starredRepositories: { totalCount: stars },
   } = data;
+
   const handleSearchInput = (e) => setSearch(e.target.value);
+  const handleAmountResultInput = (e) =>
+    setCheckedAmountResult(Number(e.target.value));
   return (
     <Container>
       <UserBar>
@@ -28,14 +32,53 @@ const Dashboard = ({ data }) => {
         </Stats>
       </UserBar>
 
-      <Search>
-        Szukaj
-        <input type="text" onInput={handleSearchInput} />
-      </Search>
+      <SearchPanel>
+        <ValuePanel>
+          <label htmlFor="searchInput">Szukaj:</label>
+          <input type="text" onInput={handleSearchInput} id="searchInput" />
+        </ValuePanel>
 
-      <SearchResultsWrapper search={search}>
-        <SearchResults search={search} />
-      </SearchResultsWrapper>
+        <ResultPanel>
+          <label htmlFor="resultInputsWrapper">
+            Result:
+            <label htmlFor="resultChoice1">
+              <input
+                type="radio"
+                id="resultChoice1"
+                name="contact"
+                value="10"
+                defaultChecked
+                onChange={handleAmountResultInput}
+              />
+              10
+            </label>
+            <label htmlFor="resultChoice2">
+              <input
+                type="radio"
+                id="resultChoice2"
+                name="contact"
+                value="50"
+                onChange={handleAmountResultInput}
+              />
+              50
+            </label>
+            <label htmlFor="resultChoice3">
+              <input
+                type="radio"
+                id="resultChoice3"
+                name="contact"
+                value="100"
+                onChange={handleAmountResultInput}
+              />
+              100
+            </label>
+          </label>
+        </ResultPanel>
+      </SearchPanel>
+
+      <ResultsWrapper search={search}>
+        <Repositories search={search} amount={checkedAmountResult} />
+      </ResultsWrapper>
     </Container>
   );
 };
@@ -81,12 +124,31 @@ const Stats = styled.p`
   }
 `;
 
-const Search = styled.div`
-  text-align: right;
-  margin-bottom: 16px;
+const SearchPanel = styled.div`
+  display: flex;
+  width: 50%;
+  justify-content: flex-end;
+  margin: 0 0 16px auto;
 `;
 
-const SearchResultsWrapper = styled(ClientOnly)`
+const ResultPanel = styled.div`
+  margin-left: 24px;
+
+  label {
+    margin-left: 8px;
+  }
+`;
+const ValuePanel = styled.div`
+  label {
+    margin-right: 8px;
+  }
+`;
+
+const ResultsWrapper = styled(ClientOnly)`
+  position: relative;
+  width: 100%;
+  height: calc(100% - (82px + (2 * 16px)));
+
   ${(props) =>
     props.search === ""
       ? css`
@@ -101,8 +163,17 @@ const SearchResultsWrapper = styled(ClientOnly)`
           gap: 40px;
           justify-content: space-evenly;
           overflow-y: scroll;
-        `}
 
-  width: 100%;
-  height: calc(100% - (82px + (2 * 16px)));
+          &::-webkit-scrollbar {
+            width: 8px;
+          }
+          &::-webkit-scrollbar-track {
+            background-color: ${(props) => props.theme.light_grey};
+            border-radius: 8px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background-color: ${(props) => props.theme.red};
+            border-radius: 8px;
+          }
+        `}
 `;
