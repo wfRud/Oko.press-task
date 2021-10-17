@@ -8,26 +8,32 @@ const Repositories = ({ search, amount }) => {
   const GET_REPOS = gql`
     query GetRepos($search: String!, $amount: Int!) {
       search(query: $search, type: REPOSITORY, first: $amount) {
-        repositoryCount
-        nodes {
-          ... on Repository {
-            url
-            name
-            id
-            owner {
-              ... on User {
-                avatarUrl
-                login
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            ... on Repository {
+              url
+              id
+              name
+              owner {
+                ... on User {
+                  avatarUrl
+                  login
+                }
               }
+              forks {
+                totalCount
+              }
+              issues {
+                totalCount
+              }
+              stargazerCount
+              description
             }
-            forks {
-              totalCount
-            }
-            issues {
-              totalCount
-            }
-            stargazerCount
-            description
           }
         }
       }
@@ -48,11 +54,14 @@ const Repositories = ({ search, amount }) => {
     );
   }
   const {
-    search: { nodes: results },
+    search: { edges: results },
   } = data;
 
   return results.map((result) => {
-    return <RepositoryTile result={result} key={result.id} />;
+    const {
+      node: { id },
+    } = result;
+    return <RepositoryTile result={result} key={id} />;
   });
 };
 export default Repositories;

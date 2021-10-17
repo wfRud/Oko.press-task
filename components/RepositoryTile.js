@@ -5,7 +5,7 @@ import StarIcon from "../public/iCons/star-outline.svg";
 import { ShortTextFunction } from "../helpers/helpers";
 import styled from "styled-components";
 
-const RepositoryTile = ({ result }) => {
+const RepositoryTile = ({ result: { node: result } }) => {
   const {
     url: urlRepo,
     name: nameRepo,
