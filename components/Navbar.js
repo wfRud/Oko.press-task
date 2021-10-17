@@ -21,7 +21,7 @@ const Navbar = () => {
     <Nav>
       <Container>
         <Logo href="/">
-          <Image src={"/logo.svg"} width={32} height={32} />
+          <Image src={"/assets/logo.svg"} width={32} height={32} />
         </Logo>
         <Menu>
           <MenuItem>Wydarzenia</MenuItem>

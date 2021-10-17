@@ -27,7 +27,7 @@ const RepositoryTile = ({ result }) => {
         </Heading>
         <Avatar>
           <Image
-            src={avatarUrl ? avatarUrl : "/octocat.svg"}
+            src={avatarUrl ? avatarUrl : "/assets/octocat.svg"}
             width={80}
             height={80}
             layout="intrinsic"
@@ -70,6 +70,11 @@ const Tile = styled.div`
   background-color: ${(props) => props.theme.white};
   border: 1px solid ${(props) => props.theme.dark};
   border-radius: 3px;
+  box-shadow: 8px 8px 27px -27px rgba(66, 68, 90, 1);
+
+  &:hover {
+    cursor: default;
+  }
 `;
 
 const TopBar = styled.div`
