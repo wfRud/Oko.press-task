@@ -1,5 +1,5 @@
 import Head from "next/head";
-import NavBar from "../components/Navbar";
+import NavBar from "../components/Navbar/Navbar";
 import Dashboard from "../components/Dashboard";
 import client from "../apollo-client";
 import { gql } from "@apollo/client";

@@ -1,14 +1,17 @@
-import { useState } from "react";
-
+import { useState, useRef } from "react";
 import Image from "next/image";
-import SearchIcon from "../public/iCons/search.svg";
-import NotificationIcon from "../public/iCons/notification.svg";
-import AccountIcon from "../public/iCons/account-circle.svg";
+import BurgerButton from "./BurgerButton";
+import SearchIcon from "../../public/iCons/search.svg";
+import NotificationIcon from "../../public/iCons/notification.svg";
+import AccountIcon from "../../public/iCons/account-circle.svg";
 import styled from "styled-components";
 
 const Navbar = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [accountMenu, setAccountMenu] = useState(true);
+  const [isActiveBurger, setActiveBurger] = useState(false);
+
+  const menuRef = useRef(null);
 
   const handleLoginButton = () => setIsLogged(true);
   const handleLogoutButton = () => {
@@ -17,13 +20,24 @@ const Navbar = () => {
   };
   const handleAccountButton = () => setAccountMenu(!accountMenu);
 
+  const handleBurgerButton = () => {
+    setActiveBurger(!isActiveBurger);
+    menuRef.current.classList.toggle("active");
+  };
+
   return (
     <Nav>
       <Container>
         <Logo href="/">
           <Image src={"/assets/logo.svg"} width={32} height={32} />
         </Logo>
-        <Menu>
+
+        <BurgerButton
+          handleBurgerButton={handleBurgerButton}
+          isActive={isActiveBurger}
+        />
+
+        <Menu isActive={isActiveBurger} ref={menuRef}>
           <MenuItem>Wydarzenia</MenuItem>
           <MenuItem>Kontakt</MenuItem>
           <MenuItem>Wesprzyj Nas</MenuItem>
@@ -56,6 +70,11 @@ const Navbar = () => {
 const Nav = styled.nav`
   width: 100%;
   height: 72px;
+  background-color: ${(props) => props.theme.white};
+
+  @media (max-width: 625px) {
+    height: 120px;
+  }
 `;
 
 const Container = styled.div`
@@ -67,6 +86,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   margin: 0 auto;
+  background-color: ${(props) => props.theme.white};
 
   @media (max-width: 1280px) {
     padding: 0 16px;
@@ -87,6 +107,18 @@ const Menu = styled.ul`
   font-size: 16px;
   font-weight: ${(props) => props.theme.medium};
   list-style: none;
+
+  &.active {
+    transform: translate(0, 40px);
+  }
+
+  @media (max-width: 625px) {
+    position: absolute;
+    min-width: 320px;
+    margin-left: 0;
+    transform: translate(-350px, 40px);
+    transition: transform 0.3s ease-in-out;
+  }
 `;
 
 const MenuItem = styled.li`

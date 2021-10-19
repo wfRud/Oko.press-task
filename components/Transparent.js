@@ -19,6 +19,7 @@ const Heading = styled.h2`
   margin-top: 24px;
   font-family: ${(props) => props.theme.alternateFont};
   font-weight: ${(props) => props.theme.light};
+  text-align: center;
 `;
 
 export default Transparent;

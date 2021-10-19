@@ -103,6 +103,9 @@ const Container = styled.div`
   @media (max-width: 1280px) {
     padding: 0 16px;
   }
+  @media (max-width: 540px) {
+    height: calc(100vh - (120px + 2 * 16px));
+  }
 `;
 
 const UserBar = styled.div`
@@ -113,8 +116,19 @@ const UserBar = styled.div`
   height: 60px;
   margin-bottom: 16px;
   font-family: ${(props) => props.theme.alternateFont};
+
+  @media (max-width: 540px) {
+    grid-template-rows: 60px 60px;
+    height: 120px;
+  } ;
 `;
-const Heading = styled.h2``;
+const Heading = styled.h2`
+  @media (max-width: 540px) {
+    grid-row: 1/2;
+    grid-column: 4/6;
+    text-align: right;
+  } ;
+`;
 
 const Stats = styled.p`
   &:nth-of-type(1) {
@@ -132,6 +146,10 @@ const Stats = styled.p`
   span {
     font-weight: ${(props) => props.theme.light};
   }
+
+  @media (max-width: 540px) {
+    grid-row: 2/3;
+  } ;
 `;
 
 const SearchPanel = styled.div`
@@ -139,6 +157,19 @@ const SearchPanel = styled.div`
   width: 50%;
   justify-content: flex-end;
   margin: 0 0 16px auto;
+
+  @media (max-width: 1025px) {
+    width: 80%;
+  }
+  @media (max-width: 684px) {
+    width: 100%;
+  }
+  @media (max-width: 540px) {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+  }
 `;
 
 const ResultPanel = styled.div`
