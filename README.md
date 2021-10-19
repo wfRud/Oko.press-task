@@ -16,7 +16,7 @@ Utwórz lokalnie na swoim komputerze folder w którym chcesz przechowywać proje
 
 ```sh
 git clone https://github.com/wfRud/Oko.press-task
-cd oko-task
+cd Oko.press-task
 npm install
 ```
 
