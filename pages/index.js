@@ -2,7 +2,7 @@ import Head from "next/head";
 import NavBar from "../components/Navbar/Navbar";
 import Dashboard from "../components/Dashboard";
 import client from "../apollo-client";
-import { gql } from "@apollo/client";
+import { USER_DATA_QUERY } from "../query.js";
 
 export default function Home({ viewer }) {
   return (
@@ -30,23 +30,7 @@ export default function Home({ viewer }) {
 
 export const getServerSideProps = async () => {
   const { data } = await client.query({
-    query: gql`
-      {
-        viewer {
-          login
-
-          following {
-            totalCount
-          }
-          followers {
-            totalCount
-          }
-          starredRepositories {
-            totalCount
-          }
-        }
-      }
-    `,
+    query: USER_DATA_QUERY,
   });
 
   return {

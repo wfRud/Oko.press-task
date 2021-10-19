@@ -1,48 +1,13 @@
+import { useQuery } from "@apollo/client";
 import RepositoryTile from "./RepositoryTile";
 import Transparent from "./Transparent";
 import Loader from "./Loader";
-import { gql, useQuery } from "@apollo/client";
 import { achieveBottom } from "../apollo-client";
+import { GET_REPOS_QUERY } from "../query.js";
 
 const Repositories = ({ search, amount }) => {
-  const GET_REPOS = gql`
-    query GetRepos($search: String!, $amount: Int!, $after: String) {
-      search(query: $search, type: REPOSITORY, first: $amount, after: $after) {
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        edges {
-          cursor
-          node {
-            ... on Repository {
-              url
-              id
-              name
-              owner {
-                ... on User {
-                  avatarUrl
-                  login
-                }
-              }
-              forks {
-                totalCount
-              }
-              issues {
-                totalCount
-              }
-              stargazerCount
-              description
-            }
-          }
-        }
-      }
-      achieveBottom @client
-    }
-  `;
-
   const { loading, error, data, fetchMore, networkStatus } = useQuery(
-    GET_REPOS,
+    GET_REPOS_QUERY,
     {
       variables: { search, amount },
     }
