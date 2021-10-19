@@ -1,8 +1,8 @@
 import Image from "next/image";
 import styled from "styled-components";
 
-const Loader = () => (
-  <LoaderWrapper>
+const Loader = ({ networkStatus = 2 }) => (
+  <LoaderWrapper networkStatus={networkStatus}>
     <Image src={"/assets/loader.svg"} height={100} width={100} />
   </LoaderWrapper>
 );
