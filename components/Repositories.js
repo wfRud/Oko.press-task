@@ -1,13 +1,13 @@
 import RepositoryTile from "./RepositoryTile";
 import Transparent from "./Transparent";
 import Loader from "./Loader";
-
 import { gql, useQuery } from "@apollo/client";
+import { testVar } from "../apollo-client";
 
 const Repositories = ({ search, amount }) => {
   const GET_REPOS = gql`
-    query GetRepos($search: String!, $amount: Int!) {
-      search(query: $search, type: REPOSITORY, first: $amount) {
+    query GetRepos($search: String!, $amount: Int!, $after: String) {
+      search(query: $search, type: REPOSITORY, first: $amount, after: $after) {
         pageInfo {
           endCursor
           hasNextPage
@@ -37,31 +37,51 @@ const Repositories = ({ search, amount }) => {
           }
         }
       }
+      testVar @client
     }
   `;
 
-  const { loading, error, data } = useQuery(GET_REPOS, {
-    variables: { search, amount },
-  });
-  if (loading) return <Loader />;
+  const { loading, error, data, fetchMore, networkStatus } = useQuery(
+    GET_REPOS,
+    {
+      variables: { search, amount },
+    }
+  );
+
+  if (loading) {
+    return <Loader networkStatus={networkStatus} />;
+  }
   if (error) {
     return `Error! ${error.message}`;
   }
-
   if (!search) {
     return (
       <Transparent txt={"Podaj nazwę repozytorium, które chcesz znaleźć."} />
     );
   }
+
   const {
-    search: { edges: results },
+    search: {
+      edges: results,
+      pageInfo: { endCursor, hasNextPage },
+    },
   } = data;
 
-  return results.map((result) => {
-    const {
-      node: { id },
-    } = result;
-    return <RepositoryTile result={result} key={id} />;
-  });
+  if (hasNextPage && testVar()) {
+    fetchMore({
+      variables: { amount, after: endCursor },
+    });
+
+    testVar(false);
+  }
+
+  return (
+    <>
+      {results.map((result, index) => {
+        return <RepositoryTile result={result} key={index} />;
+      })}
+    </>
+  );
 };
+
 export default Repositories;
