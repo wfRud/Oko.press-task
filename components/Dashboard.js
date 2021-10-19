@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { achieveBottom } from "../apollo-client";
 import ClientOnly from "./ClientOnly";
 import Repositories from "./Repositories";
 import styled, { css } from "styled-components";
@@ -6,6 +7,14 @@ import styled, { css } from "styled-components";
 const Dashboard = ({ data }) => {
   const [search, setSearch] = useState("");
   const [checkedAmountResult, setCheckedAmountResult] = useState(10);
+
+  const loadMore = ({ target }) => {
+    if (target) {
+      target.scrollTop + target.clientHeight >= target.scrollHeight - 1
+        ? achieveBottom(true)
+        : achieveBottom(false);
+    }
+  };
 
   const {
     login,
@@ -17,6 +26,7 @@ const Dashboard = ({ data }) => {
   const handleSearchInput = (e) => setSearch(e.target.value);
   const handleAmountResultInput = (e) =>
     setCheckedAmountResult(Number(e.target.value));
+
   return (
     <Container>
       <UserBar>
@@ -76,7 +86,7 @@ const Dashboard = ({ data }) => {
         </ResultPanel>
       </SearchPanel>
 
-      <ResultsWrapper search={search}>
+      <ResultsWrapper search={search} onScroll={(e) => loadMore(e)}>
         <Repositories search={search} amount={checkedAmountResult} />
       </ResultsWrapper>
     </Container>

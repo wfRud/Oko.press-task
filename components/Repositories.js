@@ -2,7 +2,7 @@ import RepositoryTile from "./RepositoryTile";
 import Transparent from "./Transparent";
 import Loader from "./Loader";
 import { gql, useQuery } from "@apollo/client";
-import { testVar } from "../apollo-client";
+import { achieveBottom } from "../apollo-client";
 
 const Repositories = ({ search, amount }) => {
   const GET_REPOS = gql`
@@ -37,7 +37,7 @@ const Repositories = ({ search, amount }) => {
           }
         }
       }
-      testVar @client
+      achieveBottom @client
     }
   `;
 
@@ -67,12 +67,12 @@ const Repositories = ({ search, amount }) => {
     },
   } = data;
 
-  if (hasNextPage && testVar()) {
+  if (hasNextPage && achieveBottom()) {
     fetchMore({
       variables: { amount, after: endCursor },
     });
 
-    testVar(false);
+    achieveBottom(false);
   }
 
   return (

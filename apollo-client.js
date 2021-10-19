@@ -4,7 +4,7 @@ import { relayStylePagination } from "@apollo/client/utilities";
 
 const token = process.env.GITHUB_ACCESS_TOKEN;
 
-export const testVar = makeVar(false);
+export const achieveBottom = makeVar(false);
 
 const authLink = setContext((_, { headers }) => {
   return {
@@ -25,9 +25,9 @@ const client = new ApolloClient({
       Query: {
         fields: {
           search: relayStylePagination(["query"]),
-          testVar: {
+          achieveBottom: {
             read() {
-              return testVar();
+              return achieveBottom();
             },
           },
         },
