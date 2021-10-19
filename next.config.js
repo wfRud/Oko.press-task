@@ -9,7 +9,7 @@ module.exports = {
     return config;
   },
   env: {
-    GITHUB_ACCESS_TOKEN: "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",
+    GITHUB_ACCESS_TOKEN: "",
   },
   images: {
     domains: ["avatars.githubusercontent.com", "unsplash.it"],
